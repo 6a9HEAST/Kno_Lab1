@@ -18,11 +18,10 @@ namespace КПО_1
         public Form1()
         {
             InitializeComponent();
-            //CreateStoredProcedure();
         }
 
 
-        private void note_Click(object sender, EventArgs e)
+        private void note_Click(object sender, EventArgs e) //кнопка справка
         {
 
             LoadDataFromDatabase();
@@ -36,7 +35,7 @@ namespace КПО_1
             changed = false;
         }
 
-        private void LoadDataFromDatabase()
+        private void LoadDataFromDatabase() //загружает таблицу models для справочника в datatable
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -49,7 +48,7 @@ namespace КПО_1
                 }
             }
         }
-        private void SaveDataToDatabase()
+        private void SaveDataToDatabase() //сохраняет datatable в models базы данных
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -67,15 +66,15 @@ namespace КПО_1
         private void Form1_Load(object sender, EventArgs e)
         {
             PopulateTableComboBox1();
-            comboBox2.Visible = false;
-            label2.Visible = false;
+            comboBox2.Visible = false;//
+            label2.Visible = false;//при выборе vehicle появляется комбобокс и надпись
             label3.Visible = false;
             dateTimePicker1.Visible = false;
-            button1.Visible = false;
+            button1.Visible = false;//при выборе contract поялвется выбор даты для сортировки,и кнопка подтвердить
             PopulateComboBox2();
         }
 
-        private void PopulateComboBox2()
+        private void PopulateComboBox2()// заполнение комбобокса с моделями машин
         {
             comboBox2.Items.Clear();
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -103,7 +102,7 @@ namespace КПО_1
                 }
             }
         }
-        private void PopulateTableComboBox1()
+        private void PopulateTableComboBox1()// заполнение комбобокса со всеми таблицаами кроме системной и models
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -128,7 +127,7 @@ namespace КПО_1
             }
         }
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)// при выборе таблицы она сразу загружается
         {
             string selectedTableName = comboBox1.SelectedItem.ToString();
             if (selectedTableName == "vehicle")
@@ -155,29 +154,10 @@ namespace КПО_1
             }
             LoadDataFromTable(selectedTableName);
         }
-        private void LoadDataFromTable(string tableName)
+        private void LoadDataFromTable(string tableName)//загрузка указанной таблицы
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                //try
-                //{
-                //    connection.Open();
-
-                //    string query = $"SELECT * FROM {tableName}";
-
-                //    selectedTableData.Clear();
-
-                //    using (SqlDataAdapter adapter = new SqlDataAdapter(query, connection))
-                //    {
-                //        adapter.Fill(selectedTableData);
-                //    }
-
-                //    dataGridView1.DataSource = selectedTableData;
-                //}
-                //catch (Exception ex)
-                //{
-                //    MessageBox.Show("Ошибка при загрузке данных из таблицы: " + ex.Message);
-                //}
                 connection.Open();
 
                 string sqlQuery = $"SELECT * FROM {tableName}";
@@ -190,45 +170,7 @@ namespace КПО_1
 
             }
         }
-        private void CreateStoredProcedure()
-        {
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                try
-                {
-                    connection.Open();
-
-                    // SQL-запрос для создания хранимой процедуры
-                    string createProcedureQuery = @"
-USE Car_insurance;
-CREATE PROCEDURE FilterDataByDate
-    @FilterDate DATE
-AS
-BEGIN
-   
-    SELECT *
-    FROM contract
-    WHERE conslusion_date > @FilterDate;
-END;
-
-                    ";
-
-                    using (SqlCommand command = new SqlCommand(createProcedureQuery, connection))
-                    {
-                        command.ExecuteNonQuery();
-                    }
-
-                    MessageBox.Show("Хранимая процедура создана успешно.");
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Ошибка при создании хранимой процедуры: " + ex.Message);
-                }
-            }
-        }
-
-
-    private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+    private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)//при выборе модели таблица сортируется 
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -246,31 +188,28 @@ END;
                         DataTable dataTable = new DataTable();
                         adapter.Fill(dataTable);
                         dataGridView1.DataSource = dataTable;
-                        // Теперь у вас есть результат выборки данных с применением параметров
                     }
                 }
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)//по нажатию кнопки выполение хранимой в базе данных процедуры
         {
             using(SqlConnection connection = new SqlConnection(connectionString))
 {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand("FilterDataByDate", connection))
+                using (SqlCommand command = new SqlCommand("FilterDataByDate", connection))// название процедуры
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
-                    // Если есть параметры, добавьте их сюда
-                    command.Parameters.AddWithValue("@FilterDate", dateTimePicker1.Value);
+                    command.Parameters.AddWithValue("@FilterDate", dateTimePicker1.Value);//загрузка в параметр процедуры значения
 
                     using (SqlDataAdapter adapter = new SqlDataAdapter(command))
                     {
                         DataTable dataTable = new DataTable();
                         adapter.Fill(dataTable);
                         dataGridView1.DataSource= dataTable;
-                        // Теперь у вас есть результат выполнения хранимой процедуры
                     }
                 }
             }
