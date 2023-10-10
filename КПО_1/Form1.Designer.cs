@@ -28,129 +28,67 @@
         /// </summary>
         private void InitializeComponent()
         {
-            dataGridView1 = new DataGridView();
-            note = new Button();
-            comboBox1 = new ComboBox();
-            label1 = new Label();
-            comboBox2 = new ComboBox();
-            label2 = new Label();
-            dateTimePicker1 = new DateTimePicker();
-            label3 = new Label();
-            button1 = new Button();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
-            SuspendLayout();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.note = new System.Windows.Forms.Button();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.SuspendLayout();
             // 
             // dataGridView1
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(14, 16);
-            dataGridView1.Margin = new Padding(3, 4, 3, 4);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.ReadOnly = true;
-            dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.RowTemplate.Height = 25;
-            dataGridView1.Size = new Size(921, 412);
-            dataGridView1.TabIndex = 0;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(12, 12);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowTemplate.Height = 25;
+            this.dataGridView1.Size = new System.Drawing.Size(776, 365);
+            this.dataGridView1.TabIndex = 0;
             // 
             // note
             // 
-            note.Location = new Point(14, 445);
-            note.Margin = new Padding(3, 4, 3, 4);
-            note.Name = "note";
-            note.Size = new Size(126, 49);
-            note.TabIndex = 1;
-            note.Text = "Справочник";
-            note.UseVisualStyleBackColor = true;
-            note.Click += note_Click;
+            this.note.Location = new System.Drawing.Point(12, 392);
+            this.note.Name = "note";
+            this.note.Size = new System.Drawing.Size(110, 37);
+            this.note.TabIndex = 1;
+            this.note.Text = "Справочник";
+            this.note.UseVisualStyleBackColor = true;
+            this.note.Click += new System.EventHandler(this.note_Click);
             // 
             // comboBox1
             // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(183, 466);
-            comboBox1.Margin = new Padding(3, 4, 3, 4);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(158, 28);
-            comboBox1.TabIndex = 2;
-            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(159, 406);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(139, 23);
+            this.comboBox1.TabIndex = 2;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // label1
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            label1.Location = new Point(222, 439);
-            label1.Name = "label1";
-            label1.Size = new Size(76, 23);
-            label1.TabIndex = 3;
-            label1.Text = "Таблица";
-            // 
-            // comboBox2
-            // 
-            comboBox2.FormattingEnabled = true;
-            comboBox2.Location = new Point(371, 466);
-            comboBox2.Name = "comboBox2";
-            comboBox2.Size = new Size(151, 28);
-            comboBox2.TabIndex = 4;
-            comboBox2.SelectedIndexChanged += comboBox2_SelectedIndexChanged;
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            label2.Location = new Point(412, 439);
-            label2.Name = "label2";
-            label2.Size = new Size(61, 23);
-            label2.TabIndex = 5;
-            label2.Text = "Марка";
-            // 
-            // dateTimePicker1
-            // 
-            dateTimePicker1.Location = new Point(371, 467);
-            dateTimePicker1.Name = "dateTimePicker1";
-            dateTimePicker1.Size = new Size(183, 27);
-            dateTimePicker1.TabIndex = 6;
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            label3.Location = new Point(351, 439);
-            label3.Name = "label3";
-            label3.Size = new Size(203, 23);
-            label3.TabIndex = 7;
-            label3.Text = "Дата заключения после:";
-            // 
-            // button1
-            // 
-            button1.Location = new Point(569, 467);
-            button1.Margin = new Padding(3, 4, 3, 4);
-            button1.Name = "button1";
-            button1.Size = new Size(135, 27);
-            button1.TabIndex = 8;
-            button1.Text = "Применить";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label1.Location = new System.Drawing.Point(195, 384);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(61, 19);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Таблица";
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(947, 508);
-            Controls.Add(button1);
-            Controls.Add(label3);
-            Controls.Add(dateTimePicker1);
-            Controls.Add(label2);
-            Controls.Add(comboBox2);
-            Controls.Add(label1);
-            Controls.Add(comboBox1);
-            Controls.Add(note);
-            Controls.Add(dataGridView1);
-            Margin = new Padding(3, 4, 3, 4);
-            Name = "Form1";
-            Text = "Form1";
-            Load += Form1_Load;
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
-            ResumeLayout(false);
-            PerformLayout();
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.note);
+            this.Controls.Add(this.dataGridView1);
+            this.Name = "Form1";
+            this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion
@@ -159,10 +97,5 @@
         private Button note;
         private ComboBox comboBox1;
         private Label label1;
-        private ComboBox comboBox2;
-        private Label label2;
-        private DateTimePicker dateTimePicker1;
-        private Label label3;
-        private Button button1;
     }
 }
