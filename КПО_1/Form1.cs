@@ -84,9 +84,9 @@ namespace КПО_1
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)// при выборе таблицы она сразу загружается
         {
-            string selectedTableName = comboBox1.SelectedItem.ToString();
             changed = false;
-            LoadDataFromTable(selectedTableName);
+            selectedtable= comboBox1.SelectedItem.ToString();
+            LoadDataFromTable(selectedtable);
         }
         private void LoadDataFromTable(string tableName)//загрузка указанной таблицы
         {
