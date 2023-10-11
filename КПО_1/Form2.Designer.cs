@@ -28,61 +28,79 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.save = new System.Windows.Forms.Button();
-            this.Cancel = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            this.SuspendLayout();
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 0);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowTemplate.Height = 25;
-            this.dataGridView1.Size = new System.Drawing.Size(800, 334);
-            this.dataGridView1.TabIndex = 0;
+            save = new Button();
+            label1 = new Label();
+            label2 = new Label();
+            comboBox1 = new ComboBox();
+            textBox1 = new TextBox();
+            SuspendLayout();
             // 
             // save
             // 
-            this.save.Location = new System.Drawing.Point(149, 346);
-            this.save.Name = "save";
-            this.save.Size = new System.Drawing.Size(130, 42);
-            this.save.TabIndex = 1;
-            this.save.Text = "Сохранить";
-            this.save.UseVisualStyleBackColor = true;
-            this.save.Click += new System.EventHandler(this.save_Click);
+            save.Location = new Point(105, 111);
+            save.Margin = new Padding(3, 4, 3, 4);
+            save.Name = "save";
+            save.Size = new Size(261, 31);
+            save.TabIndex = 1;
+            save.Text = "Выполнить выборку";
+            save.UseVisualStyleBackColor = true;
+            save.Click += save_Click;
             // 
-            // Cancel
+            // label1
             // 
-            this.Cancel.Location = new System.Drawing.Point(496, 346);
-            this.Cancel.Name = "Cancel";
-            this.Cancel.Size = new System.Drawing.Size(130, 42);
-            this.Cancel.TabIndex = 2;
-            this.Cancel.Text = "Отменить";
-            this.Cancel.UseVisualStyleBackColor = true;
-            this.Cancel.Click += new System.EventHandler(this.Cancel_Click);
+            label1.AutoSize = true;
+            label1.Location = new Point(20, 11);
+            label1.Name = "label1";
+            label1.Size = new Size(235, 20);
+            label1.TabIndex = 3;
+            label1.Text = "Выполнить выборку по столбцу:";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(20, 55);
+            label2.Name = "label2";
+            label2.Size = new Size(79, 20);
+            label2.TabIndex = 4;
+            label2.Text = "Значение:";
+            // 
+            // comboBox1
+            // 
+            comboBox1.FormattingEnabled = true;
+            comboBox1.Location = new Point(261, 11);
+            comboBox1.Name = "comboBox1";
+            comboBox1.Size = new Size(203, 28);
+            comboBox1.TabIndex = 5;
+            // 
+            // textBox1
+            // 
+            textBox1.Location = new Point(105, 52);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(166, 27);
+            textBox1.TabIndex = 6;
             // 
             // Form2
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 400);
-            this.Controls.Add(this.Cancel);
-            this.Controls.Add(this.save);
-            this.Controls.Add(this.dataGridView1);
-            this.Name = "Form2";
-            this.Text = "Form2";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            this.ResumeLayout(false);
-
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(478, 161);
+            Controls.Add(textBox1);
+            Controls.Add(comboBox1);
+            Controls.Add(label2);
+            Controls.Add(label1);
+            Controls.Add(save);
+            Margin = new Padding(3, 4, 3, 4);
+            Name = "Form2";
+            Text = "Form2";
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
-
-        private DataGridView dataGridView1;
         private Button save;
-        private Button Cancel;
+        private Label label1;
+        private Label label2;
+        private ComboBox comboBox1;
+        private TextBox textBox1;
     }
 }
