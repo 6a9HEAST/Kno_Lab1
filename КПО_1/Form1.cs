@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using КПО_1.Model;
 
 namespace КПО_1
 {
@@ -29,7 +30,7 @@ namespace КПО_1
             form2.ShowDialog();
             if (changed)
             {
-                SaveDataToDatabase();
+                //SaveDataToDatabase();
                 PopulateComboBox2();
             }
             changed = false;
@@ -37,30 +38,69 @@ namespace КПО_1
 
         private void LoadDataFromDatabase() //загружает таблицу models для справочника в datatable
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (CarInsuranceContext context = new CarInsuranceContext())
             {
-                connection.Open();
-                string query = "SELECT * FROM Models";
-                using (SqlDataAdapter adapter = new SqlDataAdapter(query, connection))
-                {
-                    dataTable.Clear();
-                    adapter.Fill(dataTable);
-                }
+                var models = context.Models.ToList();
+                dataTable.Clear();
+                dataTable = ConvertToDataTable(models);
+                dataGridView1.DataSource = dataTable;
             }
+            //using (SqlConnection connection = new SqlConnection(connectionString))
+            //{
+            //    connection.Open();
+            //    string query = "SELECT * FROM Models";
+            //    using (SqlDataAdapter adapter = new SqlDataAdapter(query, connection))
+            //    {
+            //        dataTable.Clear();
+            //        adapter.Fill(dataTable);
+            //    }
+            //}
         }
         private void SaveDataToDatabase() //сохраняет datatable в models базы данных
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (CarInsuranceContext context = new CarInsuranceContext())
             {
-                connection.Open();
-                string query = "SELECT * FROM Models";
-
-                using (SqlDataAdapter adapter = new SqlDataAdapter(query, connection))
-                using (SqlCommandBuilder builder = new SqlCommandBuilder(adapter))
+                foreach (DataGridViewRow row in dataGridView1.Rows)
                 {
-                    adapter.Update(dataTable);
+                    int modelid = (int)row.Cells["model_id"].Value;
+                    string newName = row.Cells["name"].Value.ToString();
+
+                    var model = context.Models.Find(modelid);
+                    if (model != null)
+                    {
+                        model.Name = newName;
+                    }
                 }
+
+                context.SaveChanges(); // Сохранение всех изменений в базе данных
             }
+
+            //using (SqlConnection connection = new SqlConnection(connectionString))
+            //{
+            //    connection.Open();
+            //    string query = "SELECT * FROM Models";
+
+            //    using (SqlDataAdapter adapter = new SqlDataAdapter(query, connection))
+            //    using (SqlCommandBuilder builder = new SqlCommandBuilder(adapter))
+            //    {
+            //        adapter.Update(dataTable);
+            //    }
+            //}
+        }
+        private DataTable ConvertToDataTable(List<Model.Model> models)
+        {
+            DataTable dt = new DataTable("Models");
+            dt.Columns.Add("model_id", typeof(int));
+            dt.Columns.Add("name",typeof(string));
+            foreach (var model in models)
+            {
+                // Создание новой строки в DataTable
+                DataRow row = dt.NewRow();
+                row["model_id"] = model.ModelId;
+                row["name"] = model.Name;
+                dt.Rows.Add(row);
+            }
+            return dt;
         }
 
         private void Form1_Load(object sender, EventArgs e)
