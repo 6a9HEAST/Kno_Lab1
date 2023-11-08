@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
-namespace КПО_1.Model;
+namespace КПО_1;
 
 public partial class CarInsuranceContext : DbContext
 {
@@ -29,7 +29,7 @@ public partial class CarInsuranceContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=localhost;Database=Car_insurance;Trusted_Connection=True;TrustServerCertificate=true;");
+        => optionsBuilder.UseSqlServer("Server=localhost;Database=Car_insurance;Integrated Security=True;Trusted_Connection=True;TrustServerCertificate=Yes");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -104,11 +104,11 @@ public partial class CarInsuranceContext : DbContext
 
         modelBuilder.Entity<Model>(entity =>
         {
-            entity.Property(e => e.ModelId)
-                .ValueGeneratedNever()
-                .HasColumnName("model_id");
+            entity.HasKey(e => e.ModelId).HasName("PK__Models__DC39CAF4E2C67F17");
+
+            entity.Property(e => e.ModelId).HasColumnName("model_id");
             entity.Property(e => e.Name)
-                .HasMaxLength(20)
+                .HasMaxLength(15)
                 .IsFixedLength()
                 .HasColumnName("name");
         });

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace КПО_1.Model;
+namespace КПО_1;
 
 public partial class Owner
 {

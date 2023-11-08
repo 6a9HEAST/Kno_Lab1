@@ -3,64 +3,77 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Channels;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using КПО_1.Model;
+//using КПО_1.Model;
 
 namespace КПО_1
 {
     public partial class Form2 : Form
     {
-        public Form2(ref DataTable dataTable)
+        public Form2()
         {
             InitializeComponent();
-            dataGridView1.DataSource = dataTable;
+            FillTable();
             FillCombobox();
         }
-        private void SaveDataToDatabase() //сохраняет datatable в models базы данных
+
+        private void FillTable()
         {
             using (CarInsuranceContext context = new CarInsuranceContext())
             {
-                foreach (DataGridViewRow row in dataGridView1.Rows)
-                {
-                    int modelid = (int)row.Cells["model_id"].Value;
-                    string newName = row.Cells["name"].Value.ToString();
-
-                    var model = context.Models.Find(modelid);
-                    if (model != null)
-                    {
-                        model.Name = newName;
-                    }
-                }
-
-                context.SaveChanges(); // Сохранение всех изменений в базе данных
+                var models = context.Models.Select(e => new { e.ModelId, e.Name }).ToList();
+                dataGridView1.DataSource= models;
             }
         }
 
         private void delete_but_Click(object sender, EventArgs e)
         {
-            var name = comboBox1.SelectedIndex;
+            var name = comboBox1.SelectedItem.ToString();
+            if (name!=null)
+                using (CarInsuranceContext context = new CarInsuranceContext())
+                {
+
+                    var model = context.Models.FirstOrDefault(m => m.Name == name);
+                    if (model != null)
+                    {
+                        
+                        context.Models.Remove(model);
+                        context.SaveChanges();
+                    }
+                }
+            FillCombobox();
+            FillTable();
+
+
         }
 
         private void add_but_Click(object sender, EventArgs e)
         {
+            var name = textBox1.Text;
+            using (CarInsuranceContext context = new CarInsuranceContext())
+            {
+                var model = new Model
+                {
+                    Name = name
+                };
+                context.Models.Add(model);
+                context.SaveChanges();
+                textBox1.Text = "";
 
+            }
+            FillCombobox();
+            FillTable();
         }
         private void FillCombobox()
         {
+            comboBox1.SelectedItem=null;
             comboBox1.Items.Clear();
-            using (CarInsuranceContext context = new CarInsuranceContext()) 
+            using (CarInsuranceContext context = new CarInsuranceContext())
             {
-                
+
                 var models = context.Models.ToList();
-                foreach (var model in models) 
-                { 
-                comboBox1.Items.Add(model.Name);
+                foreach (var model in models)
+                {
+                    comboBox1.Items.Add(model.Name);
                 }
             }
         }

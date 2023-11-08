@@ -4,7 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using КПО_1.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace КПО_1
 {
@@ -26,7 +26,7 @@ namespace КПО_1
         {
 
             LoadDataFromDatabase();
-            form2 = new Form2(ref dataTable);
+            form2 = new Form2();
             form2.ShowDialog();
             if (changed)
             {
@@ -43,55 +43,16 @@ namespace КПО_1
                 var models = context.Models.ToList();
                 dataTable.Clear();
                 dataTable = ConvertToDataTable(models);
-                dataGridView1.DataSource = dataTable;
-            }
-            //using (SqlConnection connection = new SqlConnection(connectionString))
-            //{
-            //    connection.Open();
-            //    string query = "SELECT * FROM Models";
-            //    using (SqlDataAdapter adapter = new SqlDataAdapter(query, connection))
-            //    {
-            //        dataTable.Clear();
-            //        adapter.Fill(dataTable);
-            //    }
-            //}
-        }
-        private void SaveDataToDatabase() //сохраняет datatable в models базы данных
-        {
-            using (CarInsuranceContext context = new CarInsuranceContext())
-            {
-                foreach (DataGridViewRow row in dataGridView1.Rows)
-                {
-                    int modelid = (int)row.Cells["model_id"].Value;
-                    string newName = row.Cells["name"].Value.ToString();
-
-                    var model = context.Models.Find(modelid);
-                    if (model != null)
-                    {
-                        model.Name = newName;
-                    }
-                }
-
-                context.SaveChanges(); // Сохранение всех изменений в базе данных
+                
             }
 
-            //using (SqlConnection connection = new SqlConnection(connectionString))
-            //{
-            //    connection.Open();
-            //    string query = "SELECT * FROM Models";
-
-            //    using (SqlDataAdapter adapter = new SqlDataAdapter(query, connection))
-            //    using (SqlCommandBuilder builder = new SqlCommandBuilder(adapter))
-            //    {
-            //        adapter.Update(dataTable);
-            //    }
-            //}
         }
-        private DataTable ConvertToDataTable(List<Model.Model> models)
+        
+        private DataTable ConvertToDataTable(List<Model> models)
         {
             DataTable dt = new DataTable("Models");
             dt.Columns.Add("model_id", typeof(int));
-            dt.Columns.Add("name",typeof(string));
+            dt.Columns.Add("name", typeof(string));
             foreach (var model in models)
             {
                 // Создание новой строки в DataTable
@@ -210,48 +171,29 @@ namespace КПО_1
 
             }
         }
-    private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)//при выборе модели таблица сортируется 
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)//при выборе модели таблица сортируется 
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (CarInsuranceContext context = new CarInsuranceContext())
             {
-                connection.Open();
+                string selectedBrand = comboBox2.SelectedItem.ToString();
 
-                string query = "SELECT * FROM vehicle WHERE brand = @brandparam";
+                var vehicles = context.Vehicles
+                                    .Where(v => v.Brand == selectedBrand).Select(e => new { e.VehicleId, e.StateImplementationNumber, e.Brand, e.Mileage, e.OwnerDrivingExperience, e.ModelId, e.OwnerId })
+                                    .ToList();
 
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    // Добавляем параметры
-                    command.Parameters.AddWithValue("@brandparam", comboBox2.SelectedItem.ToString());
-
-                    using (SqlDataAdapter adapter = new SqlDataAdapter(command))
-                    {
-                        DataTable dataTable = new DataTable();
-                        adapter.Fill(dataTable);
-                        dataGridView1.DataSource = dataTable;
-                    }
-                }
+                dataGridView1.DataSource = vehicles;
             }
         }
 
         private void button1_Click(object sender, EventArgs e)//по нажатию кнопки выполение хранимой в базе данных процедуры
         {
-            using(SqlConnection connection = new SqlConnection(connectionString))
-{
-                connection.Open();
+            using (CarInsuranceContext context = new CarInsuranceContext())
+            {
+                var filterDate = dateTimePicker1.Value;
 
-                using (SqlCommand command = new SqlCommand("FilterDataByDate", connection))// название процедуры
-                {
-                    command.CommandType = CommandType.StoredProcedure;
+                var results = context.Contracts.FromSqlRaw("EXEC FilterDataByDate @FilterDate", new Microsoft.Data.SqlClient.SqlParameter("FilterDate", filterDate)).ToList();
 
-                    command.Parameters.AddWithValue("@FilterDate", dateTimePicker1.Value);//загрузка в параметр процедуры значения
-
-                    using (SqlDataAdapter adapter = new SqlDataAdapter(command))
-                    {
-                        DataTable dataTable = new DataTable();
-                        adapter.Fill(dataTable);
-                        dataGridView1.DataSource= dataTable;
-                    }
-                }
+                dataGridView1.DataSource = results;
             }
         }
     }
