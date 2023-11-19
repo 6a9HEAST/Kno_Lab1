@@ -33,6 +33,9 @@
             textBox1 = new TextBox();
             delete_but = new Button();
             add_but = new Button();
+            Change_combobox = new ComboBox();
+            Change_textBox = new TextBox();
+            Change_but = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -43,11 +46,11 @@
             dataGridView1.Location = new Point(0, 0);
             dataGridView1.Margin = new Padding(3, 4, 3, 4);
             dataGridView1.Name = "dataGridView1";
-            dataGridView1.ReadOnly = true;
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.RowTemplate.Height = 25;
             dataGridView1.Size = new Size(914, 445);
             dataGridView1.TabIndex = 0;
+            dataGridView1.CellEndEdit += dataGridView1_CellEndEdit;
             // 
             // comboBox1
             // 
@@ -86,11 +89,41 @@
             add_but.UseVisualStyleBackColor = true;
             add_but.Click += add_but_Click;
             // 
+            // Change_combobox
+            // 
+            Change_combobox.FormattingEnabled = true;
+            Change_combobox.Location = new Point(525, 486);
+            Change_combobox.Name = "Change_combobox";
+            Change_combobox.Size = new Size(69, 28);
+            Change_combobox.TabIndex = 7;
+            Change_combobox.SelectedIndexChanged += comboBox2_SelectedIndexChanged;
+            // 
+            // Change_textBox
+            // 
+            Change_textBox.Location = new Point(600, 487);
+            Change_textBox.Name = "Change_textBox";
+            Change_textBox.Size = new Size(151, 27);
+            Change_textBox.TabIndex = 8;
+            // 
+            // Change_but
+            // 
+            Change_but.Location = new Point(757, 487);
+            Change_but.Margin = new Padding(3, 4, 3, 4);
+            Change_but.Name = "Change_but";
+            Change_but.Size = new Size(149, 28);
+            Change_but.TabIndex = 9;
+            Change_but.Text = "Изменить";
+            Change_but.UseVisualStyleBackColor = true;
+            Change_but.Click += Change_but_Click;
+            // 
             // Form2
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(914, 533);
+            Controls.Add(Change_but);
+            Controls.Add(Change_textBox);
+            Controls.Add(Change_combobox);
             Controls.Add(add_but);
             Controls.Add(delete_but);
             Controls.Add(textBox1);
@@ -111,5 +144,8 @@
         private TextBox textBox1;
         private Button delete_but;
         private Button add_but;
+        private ComboBox Change_combobox;
+        private TextBox Change_textBox;
+        private Button Change_but;
     }
 }
