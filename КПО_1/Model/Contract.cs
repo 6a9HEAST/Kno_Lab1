@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using MongoDB.Bson;
+using MongoDB.Driver;
 
 namespace КПО_1;
 
@@ -25,3 +27,4 @@ public partial class Contract
 
     public virtual Vehicle Vehicle { get; set; } = null!;
 }
+

@@ -5,12 +5,13 @@ using System.Data.SqlClient;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using Microsoft.EntityFrameworkCore;
+using MongoDB.Driver;
 
 namespace КПО_1
 {
     public partial class Form1 : Form
     {
-        private string connectionString = ConfigurationManager.ConnectionStrings["MyDBConnection"].ConnectionString;
+        //private string connectionString = ConfigurationManager.ConnectionStrings["MyDBConnection"].ConnectionString;
         private DataTable dataTable = new DataTable();
         public static bool changed = false;
         private DataTable selectedTableData = new DataTable();

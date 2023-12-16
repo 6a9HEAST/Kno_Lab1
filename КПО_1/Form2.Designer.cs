@@ -33,6 +33,9 @@
             textBox1 = new TextBox();
             delete_but = new Button();
             add_but = new Button();
+            comboBoxForUpdate = new ComboBox();
+            textBoxForUpdate = new TextBox();
+            UpdateButton = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -86,11 +89,40 @@
             add_but.UseVisualStyleBackColor = true;
             add_but.Click += add_but_Click;
             // 
+            // comboBoxForUpdate
+            // 
+            comboBoxForUpdate.FormattingEnabled = true;
+            comboBoxForUpdate.Location = new Point(453, 454);
+            comboBoxForUpdate.Name = "comboBoxForUpdate";
+            comboBoxForUpdate.Size = new Size(151, 28);
+            comboBoxForUpdate.TabIndex = 7;
+            // 
+            // textBoxForUpdate
+            // 
+            textBoxForUpdate.Location = new Point(630, 455);
+            textBoxForUpdate.Name = "textBoxForUpdate";
+            textBoxForUpdate.Size = new Size(151, 27);
+            textBoxForUpdate.TabIndex = 8;
+            // 
+            // UpdateButton
+            // 
+            UpdateButton.Location = new Point(630, 492);
+            UpdateButton.Margin = new Padding(3, 4, 3, 4);
+            UpdateButton.Name = "UpdateButton";
+            UpdateButton.Size = new Size(149, 28);
+            UpdateButton.TabIndex = 9;
+            UpdateButton.Text = "Изменить";
+            UpdateButton.UseVisualStyleBackColor = true;
+            UpdateButton.Click += UpdateButton_Click;
+            // 
             // Form2
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(914, 533);
+            Controls.Add(UpdateButton);
+            Controls.Add(textBoxForUpdate);
+            Controls.Add(comboBoxForUpdate);
             Controls.Add(add_but);
             Controls.Add(delete_but);
             Controls.Add(textBox1);
@@ -111,5 +143,8 @@
         private TextBox textBox1;
         private Button delete_but;
         private Button add_but;
+        private ComboBox comboBoxForUpdate;
+        private TextBox textBoxForUpdate;
+        private Button UpdateButton;
     }
 }

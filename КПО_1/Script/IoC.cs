@@ -14,7 +14,7 @@ namespace КПО_1
         public override void Load()
         {
             Bind<CarInsuranceContext>().ToSelf().InTransientScope();
-            Bind<IModelRepository>().To<ModelRepository>();
+            Bind<IModelRepository>().To<NoSqlModelRepository>();
         }
     }
 }

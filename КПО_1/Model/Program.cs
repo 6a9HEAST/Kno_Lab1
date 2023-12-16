@@ -1,5 +1,6 @@
 using Ninject;
 using System.Reflection;
+using MongoDB.Driver;
 
 namespace КПО_1
 {

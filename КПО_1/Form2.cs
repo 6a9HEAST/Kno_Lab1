@@ -14,23 +14,22 @@ namespace КПО_1
         {
             InitializeComponent();
             _repository = repository;
-            _repository.UpdateTable(dataGridView1);
-            FillCombobox();
-            
+            UpdateTable();
+            UpdateCombobox();
+
         }
         ~Form2()
         {
-            
+
         }
 
         private void delete_but_Click(object sender, EventArgs e)
         {
             var name = comboBox1.SelectedItem.ToString();
-            if (name!=null)
+            if (name != null)
                 _repository.Delete(name);
-            FillCombobox();
-            _repository.UpdateTable(dataGridView1);
-
+            UpdateCombobox();
+            UpdateTable();
 
         }
 
@@ -39,22 +38,36 @@ namespace КПО_1
             var name = textBox1.Text;
             _repository.Create(name);
             textBox1.Text = "";
-            FillCombobox();
-            _repository.UpdateTable(dataGridView1);
+            UpdateCombobox();
+            UpdateTable();
         }
-        private void FillCombobox()
-        {
-            comboBox1.SelectedItem=null;
-            comboBox1.Items.Clear();
-            using (CarInsuranceContext context = new CarInsuranceContext())
-            {
 
-                var models = context.Models.ToList();
-                foreach (var model in models)
-                {
-                    comboBox1.Items.Add(model.Name);
-                }
+        private void UpdateTable()
+        {
+            DataTable dt = _repository.ReturnTable();
+            dataGridView1.DataSource = dt;
+        }
+
+        private void UpdateCombobox()
+        {
+            comboBox1.SelectedItem = null;
+            comboBox1.Items.Clear();
+            comboBoxForUpdate.SelectedItem = null;
+            comboBoxForUpdate.Items.Clear();
+            var names = _repository.ReturnNames();
+            foreach (var name in names)
+            {
+                comboBox1.Items.Add(name);
+                comboBoxForUpdate.Items.Add(name);
             }
+        }
+
+        private void UpdateButton_Click(object sender, EventArgs e)
+        {
+            _repository.Update(comboBoxForUpdate.SelectedItem.ToString(),textBoxForUpdate.Text.ToString());
+            UpdateTable();
+            UpdateCombobox();
+            textBoxForUpdate.Text = "";
         }
     }
 }

@@ -20,7 +20,7 @@ namespace КПО_1
         public UnitOfWork(CarInsuranceContext context)
         {
             _context = context;
-            model_repository = new ModelRepository(_context);
+            model_repository = new SqlModelRepository(_context);
         }
         public void SaveChanges()
         {
